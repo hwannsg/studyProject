@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	<comment>System Properties</comment>
+	<!-- System Properties -->
+	<entry key="network.waiting">10000</entry>
+ 	<entry key="database.url">jdbc:postgresql://hwangandshin.cijafwttjpvv.ap-northeast-2.rds.amazonaws.com</entry>
+	<entry key="database.username">hwangandshin</entry>
+ 	<entry key="database.password">!1q2w3e4r5t</entry>
+</properties>

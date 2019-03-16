@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="P2DAO">
+ <!-- 휴가 리스트 -->
+ <select id="selectCalendarList" parameterType="loginVo" resultType="HashMap">   
+       	select ( CASE WHEN code = '1' THEN '출장'
+				  WHEN code = '2' THEN '미팅' 
+				  WHEN code = '3' THEN '교육' 
+				  WHEN code = '4' THEN '외근'
+				  ELSE '미기입'
+				 end
+				)AS title,
+				date_trunc('minute', start_dt) as start,
+				date_trunc('minute', end_dt) as end,
+				color,
+				allday,
+				url 
+		from hr_003_1
+       	WHERE user_id = #{id}
+       	  AND reg_dt BETWEEN 
+       	  				'2019-01-01'
+		  				AND
+						'2019-12-31'				
+</select>
+
+<insert id="saveList" parameterType="ScheduleVo">
+  			INSERT INTO hr_003_1
+   			VALUES(
+   					 #{id},
+   					 to_timestamp(#{a} , 'YYYY-MM-DD HH24:MI:SS'),
+   					 to_timestamp(#{b} , 'YYYY-MM-DD HH24:MI:SS'),
+   					 #{color},
+   					 #{allDay},   					 
+   					 #{url},
+   					 #{title},
+   					 #{sType},
+   					now()					
+   				   )			
+   						
+
+</insert>
+
+</mapper>

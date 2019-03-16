@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+ 
+<tiles-definitions>
+ 	
+ 	<!-- (1) 레이아웃을 적용하지않는화면-->    
+    <definition name=".login" template="/WEB-INF/jsp/layout/loginLayout.jsp">
+    </definition>
+    
+    <definition name=".popup" template="/WEB-INF/jsp/layout/popupLayout.jsp">	
+    	<put-attribute name="header"   	value="/WEB-INF/jsp/layout/header.jsp" />	
+    	<put-attribute name="left"        value="/WEB-INF/jsp/layout/left2.jsp" />	
+    	<put-attribute name="content"   	value="" />    
+    </definition>
+ 	
+ 	
+ 	 <!--  Default 레이아웃 -->
+	 <definition name=".main" template="/WEB-INF/jsp/layout/layout.jsp">
+		  <put-attribute name="header"   	value="/WEB-INF/jsp/layout/header.jsp" />	  
+		  <put-attribute name="left"        value="/WEB-INF/jsp/layout/left.jsp" />	
+		  <put-attribute name="content"   	value="" />
+	 </definition>		
+	 
+	 
+	 
+	 <definition name="portal/common/*" extends=".login">
+	  	<put-attribute name="content"   value="/WEB-INF/jsp/portal/common/{1}.jsp" />
+	 </definition>
+
+	 <definition name="portal/*/*.only" extends=".popup">
+	  	<put-attribute name="content"   value="/WEB-INF/jsp/portal/{1}/{2}.jsp" />
+	 </definition>
+	 
+	 <definition name="portal/*/*" extends=".main">
+	  	<put-attribute name="content"   value="/WEB-INF/jsp/portal/{1}/{2}.jsp" />
+	 </definition>
+	 
+	
+</tiles-definitions>

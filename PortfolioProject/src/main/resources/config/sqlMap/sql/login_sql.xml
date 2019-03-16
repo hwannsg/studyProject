@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="commonLogin">
+
+<select id="GetList"  resultType="HashMap">   
+       		select  "CODE", "NAME" 
+       		from hr_005    			  
+</select>
+
+<insert id="JoinPage" parameterType="loginVo">
+  			INSERT INTO hr_001
+  				 (
+   						user_id,
+   						user_name,
+   						dp_code,
+   						pwd,
+   						user_level,   						
+   						valid,
+   						user_join_dt,
+						user_age,
+						user_email
+   				  )
+   			VALUES(
+   					 #{id},
+   					 #{name},
+   					 #{subject},
+   					 #{pwd},
+   					 #{grade},   					 
+   					 'X',
+   					 now(),
+   					 ${age},
+   					 #{email} 					
+   				   )			
+   						
+
+</insert>
+
+<select id="GetUserInfo"  resultType="HashMap">   
+       		SELECT 
+       		(  CASE WHEN user_level = '1' THEN '사원'
+				WHEN user_level = '2' THEN '대리'
+				WHEN user_level = '3' THEN '과장'
+				WHEN user_level = '4' THEN '차장'
+				WHEN user_level = '5' THEN '부장'
+				WHEN user_level = '6' THEN '이사'
+			   ELSE ''				 				   
+				 end
+			)AS level,
+			(select "NAME" from hr_005 WHERE "CODE" = dp_code) as code,
+			user_id,
+			user_name,
+			user_join_dt,
+			valid,
+			user_email	
+			from hr_001	
+       		where user_id = #{id}  
+</select>
+
+<insert id="InsertLogin" parameterType="loginVo">
+  			with login as ( 
+			      select * from hr_002 where user_id = #{id} and user_date = #{date}
+			) insert into hr_002(user_id, user_date,start_time,ip) SELECT #{id},#{date},now(),#{userIp}
+			  where not exists (select * from login)		   						
+</insert>
+<update id="InsertLogout" parameterType="loginVo">
+	<![CDATA[
+		update  hr_002  
+		set end_time = now() 
+		where 
+		user_id = #{id} and 
+		user_date= #{date} and
+		(select to_char(now()-start_time,'HH24:MI:SS') 
+			from hr_002
+			where  
+			user_id = #{id} and 
+			user_date=#{date}
+		) > '08:00:00'
+	]]>
+</update>
+
+</mapper>

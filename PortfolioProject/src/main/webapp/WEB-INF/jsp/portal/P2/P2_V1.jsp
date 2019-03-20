@@ -27,55 +27,8 @@
 	var d = date.getDate();
 	var m = date.getMonth();
 	var y = date.getFullYear();
-	
-    jQuery(document).ready(function() {
-			jsonData = null;
-			$.ajax({
-			  	  type : 'POST',
-			        data : 'w',
-			        url : "/portal/P2/P2AjaxList.do",
-			        processData : false,
-			        contentType: false,
-				  	success : function(data) {
-			  		setCalendar(data);
-			     }
-			    , error : function(request, status, error) {
-			    alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
-			    }		     
-	 	    });
-		
-		
-		
-	        
-	    
-    }); 
-    $(function() {
-    	$("#CreateSchedule").on("click",function(){
-		  var formData = $("#Schedule").serialize();
-     	  $.ajax({ 
-		     		 	type : "POST",
-						url : "/portal/P2/P2SaveList.do",
-						cache : false,
-						data : formData,	          
-   					    success : function(data) {
-   				    	   if(JSON.parse(data).success = true){
-   				    		setCalendar(JSON.parse(data).list);
-   				    		 $('#calendar').attr('src', "/portal/P2/P2Action.do"); 
-   				    		 
-   				    	   }else{
-   				    		   alert(JSON.parse(data).msg);
-   				    	   }
-   					    },
-   				       error : function(request,status,error,data) {	  
-   				    	   alert(request+status+error+"="+data);
-   				    	 
-   				       }	       
-   				   }); 
-   			});
-		});
-    function setCalendar(data){
+	function setCalendar(data){
 		 jsonData = JSON.stringify(data);
-		 alert("ss");
 		 var calendar = $('#calendar').fullCalendar({
 				header: {
 					left: 'prev,next today',
@@ -107,6 +60,51 @@
 				events: eval(jsonData)    
 			});    
 	}
+    jQuery(document).ready(function() {
+			jsonData = null;
+			$.ajax({
+			  	  type : 'POST',
+			        data : 'w',
+			        url : "/portal/P2/P2AjaxList.do",
+			        processData : false,
+			        contentType: false,
+				  	success : function(data) {
+			  		setCalendar(data);
+			     }
+			    , error : function(request, status, error) {
+			    alert("code : " + request.status + "\r\nmessage : " + request.reponseText);
+			    }		     
+	 	    });
+		
+		
+		
+	        
+	    
+    }); 
+    $(function() {
+    	$("#CreateSchedule").on("click",function(){
+		  var formData = $("#Schedule").serialize();
+     	  $.ajax({ 
+		     		 	type : "POST",
+						url : "/portal/P2/P2SaveList.do",
+						cache : false,
+						data : formData,	          
+   					    success : function(data) {
+   				    	   if(JSON.parse(data).success = true){
+   				    		location.reload();
+   				    		 
+   				    	   }else{
+   				    		   alert(JSON.parse(data).msg);
+   				    	   }
+   					    },
+   				       error : function(request,status,error,data) {	  
+   				    	   alert(request+status+error+"="+data);
+   				    	 
+   				       }	       
+   				   }); 
+   			});
+		});
+    
 </script>
 <style>
 	.row{
@@ -123,7 +121,8 @@
 				
 				
 				<div>
-			   		<div id="calendar"></div>			   		
+			   		<div id="calendar" name ="calendar"></div>
+			   					   		
 			   	</div>	
 			</div> 					
 		</div>		

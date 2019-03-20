@@ -12,8 +12,8 @@
 				  ELSE '미기입'
 				 end
 				)AS title,
-				date_trunc('minute', start_dt) as start,
-				date_trunc('minute', end_dt) as end,
+				start_dt as start,
+				end_dt as end,
 				color,
 				allday,
 				url 
@@ -29,14 +29,14 @@
   			INSERT INTO hr_003_1
    			VALUES(
    					 #{id},
-   					 to_timestamp(#{a} , 'YYYY-MM-DD HH24:MI:SS'),
-   					 to_timestamp(#{b} , 'YYYY-MM-DD HH24:MI:SS'),
    					 #{color},
    					 #{allDay},   					 
    					 #{url},
    					 #{title},
    					 #{sType},
-   					now()					
+   					 now(),	
+   					 #{start_dt}	,
+   					 #{end_dt}	
    				   )			
    						
 

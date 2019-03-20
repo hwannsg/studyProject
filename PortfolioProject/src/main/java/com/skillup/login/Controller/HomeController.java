@@ -31,6 +31,7 @@ import com.skillup.Vo.vo.ResponseVO;
 import com.skillup.Vo.vo.loginVo;
 import com.skillup.common.CommonUtil;
 import com.skillup.common.GetWeather;
+import com.skillup.common.SMTPController;
 import com.skillup.common.SecurityUtil;
 import com.skillup.login.ServiceImp.CommonImp;
 
@@ -67,14 +68,14 @@ public class HomeController {
 	public ModelAndView home(Locale locale, Model model) {
 		mav = new ModelAndView();
 		try {
-			Thread.sleep(1000);
+			SMTPController.RegisterUser();
 			if((String)session.getAttribute("ID") != null ){
 				mav.setViewName("portal/mainPortal/mainPage");
 				return mav;
 			}else{
 				mav.setViewName("portal/common/commonLogin");
 			}
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
